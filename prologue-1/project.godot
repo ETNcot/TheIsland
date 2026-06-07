@@ -11,8 +11,13 @@ config_version=5
 [application]
 
 config/name="prologue_1"
+run/main_scene="uid://dbswh84qi0bic"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
+
+[autoload]
+
+global="*uid://cff4ku3gwsja7"
 
 [display]
 

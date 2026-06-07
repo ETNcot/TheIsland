@@ -6,6 +6,22 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_qhqgy"]
 radius = 3.0
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_t4otl"]
+atlas = ExtResource("1_3vyb7")
+region = Rect2(0, 336, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j2b1d"]
+atlas = ExtResource("1_3vyb7")
+region = Rect2(48, 336, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cs1tg"]
+atlas = ExtResource("1_3vyb7")
+region = Rect2(96, 336, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2dvfe"]
+atlas = ExtResource("1_3vyb7")
+region = Rect2(144, 336, 48, 48)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_g2els"]
 atlas = ExtResource("1_3vyb7")
 region = Rect2(0, 96, 48, 48)
@@ -154,6 +170,23 @@ region = Rect2(240, 192, 48, 48)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_t4otl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j2b1d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cs1tg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2dvfe")
+}],
+"loop": true,
+"name": &"attack_side",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_g2els")
 }, {
 "duration": 1.0,
@@ -173,7 +206,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"idle_back",
-"speed": 5.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -196,7 +229,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"idle_front",
-"speed": 5.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -219,7 +252,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"idle_side",
-"speed": 5.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -242,7 +275,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"walk_back",
-"speed": 5.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -265,7 +298,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"walk_front",
-"speed": 5.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -288,7 +321,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"walk_side",
-"speed": 5.0
+"speed": 6.0
 }]
 
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=1560605064]
@@ -300,9 +333,22 @@ shape = SubResource("CircleShape2D_qhqgy")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=448431172]
 position = Vector2(0, -17)
 sprite_frames = SubResource("SpriteFrames_t4otl")
-animation = &"idle_front"
+animation = &"attack_side"
+frame_progress = 0.07596944
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=1501418591]
+[node name="Camera_world" type="Camera2D" parent="." unique_id=1501418591]
+limit_left = 0
+limit_top = 0
+limit_right = 448
+limit_bottom = 240
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+drag_left_margin = 0.15
+drag_top_margin = 0.15
+drag_right_margin = 0.15
+drag_bottom_margin = 0.15
+
+[node name="Camera_camp" type="Camera2D" parent="." unique_id=290912040]
 limit_left = 0
 limit_top = 0
 limit_right = 448
