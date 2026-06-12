@@ -6,6 +6,38 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_qhqgy"]
 radius = 3.0
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_giy8y"]
+atlas = ExtResource("1_3vyb7")
+region = Rect2(0, 384, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fdfoy"]
+atlas = ExtResource("1_3vyb7")
+region = Rect2(48, 384, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hhpqf"]
+atlas = ExtResource("1_3vyb7")
+region = Rect2(96, 384, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g5jhy"]
+atlas = ExtResource("1_3vyb7")
+region = Rect2(144, 384, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_holxr"]
+atlas = ExtResource("1_3vyb7")
+region = Rect2(0, 288, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mx1m4"]
+atlas = ExtResource("1_3vyb7")
+region = Rect2(48, 288, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4gjji"]
+atlas = ExtResource("1_3vyb7")
+region = Rect2(96, 288, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u2ulf"]
+atlas = ExtResource("1_3vyb7")
+region = Rect2(144, 288, 48, 48)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_t4otl"]
 atlas = ExtResource("1_3vyb7")
 region = Rect2(0, 336, 48, 48)
@@ -21,6 +53,18 @@ region = Rect2(96, 336, 48, 48)
 [sub_resource type="AtlasTexture" id="AtlasTexture_2dvfe"]
 atlas = ExtResource("1_3vyb7")
 region = Rect2(144, 336, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6e8lb"]
+atlas = ExtResource("1_3vyb7")
+region = Rect2(0, 432, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2gdjj"]
+atlas = ExtResource("1_3vyb7")
+region = Rect2(48, 432, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sc3ue"]
+atlas = ExtResource("1_3vyb7")
+region = Rect2(96, 432, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g2els"]
 atlas = ExtResource("1_3vyb7")
@@ -170,6 +214,40 @@ region = Rect2(240, 192, 48, 48)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_giy8y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fdfoy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hhpqf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g5jhy")
+}],
+"loop": true,
+"name": &"attack_back",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_holxr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mx1m4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4gjji")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u2ulf")
+}],
+"loop": true,
+"name": &"attack_front",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_t4otl")
 }, {
 "duration": 1.0,
@@ -183,7 +261,21 @@ animations = [{
 }],
 "loop": true,
 "name": &"attack_side",
-"speed": 8.0
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6e8lb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2gdjj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sc3ue")
+}],
+"loop": true,
+"name": &"died",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -324,6 +416,9 @@ animations = [{
 "speed": 6.0
 }]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_g2els"]
+radius = 6.0
+
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=1560605064]
 script = ExtResource("1_g2els")
 
@@ -334,7 +429,6 @@ shape = SubResource("CircleShape2D_qhqgy")
 position = Vector2(0, -17)
 sprite_frames = SubResource("SpriteFrames_t4otl")
 animation = &"attack_side"
-frame_progress = 0.07596944
 
 [node name="Camera_world" type="Camera2D" parent="." unique_id=1501418591]
 limit_left = 0
@@ -359,3 +453,34 @@ drag_left_margin = 0.15
 drag_top_margin = 0.15
 drag_right_margin = 0.15
 drag_bottom_margin = 0.15
+
+[node name="player_hitbox" type="Area2D" parent="." unique_id=991496597]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="player_hitbox" unique_id=1033630792]
+shape = SubResource("CircleShape2D_g2els")
+
+[node name="HealthBar" type="ProgressBar" parent="." unique_id=1620773549]
+modulate = Color(0.07450981, 0.6666667, 0, 0.7294118)
+offset_left = -6.0
+offset_top = 5.0
+offset_right = 7.0
+offset_bottom = 9.0
+allow_greater = true
+allow_lesser = true
+show_percentage = false
+
+[node name="attacked_cooldown" type="Timer" parent="." unique_id=926892298]
+wait_time = 2.0
+
+[node name="attack_timer" type="Timer" parent="." unique_id=1744417510]
+wait_time = 0.8
+
+[node name="health_reg_timer" type="Timer" parent="." unique_id=1521258720]
+wait_time = 5.0
+autostart = true
+
+[connection signal="body_entered" from="player_hitbox" to="." method="_on_player_hitbox_body_entered"]
+[connection signal="body_exited" from="player_hitbox" to="." method="_on_player_hitbox_body_exited"]
+[connection signal="timeout" from="attacked_cooldown" to="." method="_on_attacked_cooldown_timeout"]
+[connection signal="timeout" from="attack_timer" to="." method="_on_attack_timer_timeout"]
+[connection signal="timeout" from="health_reg_timer" to="." method="_on_health_reg_timer_timeout"]
