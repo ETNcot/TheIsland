@@ -3,9 +3,11 @@ extends CharacterBody2D
 # VARIABLE
 var speed = 50
 var health = 100
+var enemy_alive = true
 
 var is_chasing = false
 var player = null
+var vector_chase = Vector2.ZERO
 
 var idle = true
 var idle_speed = 20
@@ -23,44 +25,53 @@ func _ready() -> void:
 	$AnimatedSprite2D.play("idle_front")
 
 func _physics_process(delta: float) -> void:
-	#chasing()
-	deal_with_deamge()
+	deal_with_demage()
 	update_health()
+	enemy_death()
+	
 	rand_direction()
-	idle_walk()
 	idle_animate()
-#--------------------------------------------------------------------------
-
-# BEHAVIOR
-func chasing():
-	if is_chasing:
-		#print("player chase")
-		position += (player.position - position) / speed
-		if player.position.x - position.x < 0 :
-			$AnimatedSprite2D.flip_h = true
-		else :
-			$AnimatedSprite2D.flip_h = false
-		$AnimatedSprite2D.play("walk_side")
-			
-	else :
-		#print("idle")
-		$AnimatedSprite2D.flip_h = false
-		$AnimatedSprite2D.play("idle_front")
+	idle_walk()
+	
+	chase_animation()
+	chasing()
 	
 	move_and_slide()
+#--------------------------------------------------------------------------
 
-func deal_with_deamge():
-	if player_attack_range and global.player_attack:
+# CHASE
+func chasing():
+	if is_chasing and enemy_alive:
+		var distance = position.distance_to(player.position)
+		if distance >= 12:
+			vector_chase = (player.position - position).normalized()
+			velocity = vector_chase * speed
+#--------------------------------------------------------------------------
+
+# DEMAGE
+func deal_with_demage():
+	if player_attack_range and global.player_attack and global.enemy_well_placed and enemy_alive:
 		if can_take_damege:
 			$attacked_cooldown.start()
 			can_take_damege = false
 			
 			health -= 35
 			print("enemy hp:", health)
-			if health <=0:
-				$AnimatedSprite2D.play("died")
-				self.queue_free()
+#--------------------------------------------------------------------------
 
+# DEATH
+func enemy_death():
+	if health <= 0 and enemy_alive:
+		velocity = Vector2.ZERO
+		var sp = $AnimatedSprite2D
+		sp.play("death")
+		#await sp.animation_finished
+		enemy_alive = false
+		$timer_death.start()
+		print("enemy died")
+#--------------------------------------------------------------------------
+
+# HEALTH
 func update_health():
 	var hb = $HealthBar
 	hb.value = health
@@ -73,12 +84,19 @@ func update_health():
 
 # IDLE WALK
 func rand_direction():
-	if idle:
+	if idle and not idle_walking and enemy_alive:
+		var rd_time = randf_range(1,3)
+		$timer_direction.wait_time = rd_time + randf_range(1,3)
+		$timer_walk.wait_time = rd_time
+		$timer_direction.start()
+		$timer_walk.start()
 		rand_dir = Vector2(randf_range(-10,10),randf_range(-10,10)).normalized()
 		idle_walking = true
+		idle_stop = false
+		#print("there")
 
 func idle_walk():
-	if idle and not idle_stop:
+	if idle and not idle_stop and enemy_alive:
 		velocity = rand_dir * idle_speed
 	else :
 		velocity = Vector2.ZERO
@@ -87,18 +105,37 @@ func idle_walk():
 
 # ANIMATE
 func idle_animate():
-	if abs(rand_dir.x) > abs(rand_dir.y):
-		$AnimatedSprite2D.play("walk_side")
-		if rand_dir.x < 0 :
-			$AnimatedSprite2D.flip_h = true
-		else:
-			$AnimatedSprite2D.flip_h = false
-	
-	if abs(rand_dir.x) < abs(rand_dir.y):
-		if rand_dir.y < 0 :
-			$AnimatedSprite2D.play("walk_back")
-		else:
-			$AnimatedSprite2D.play("walk_front")
+	if not is_chasing and enemy_alive:
+		if abs(rand_dir.x) > abs(rand_dir.y):
+			$AnimatedSprite2D.play("walk_side")
+			if rand_dir.x < 0 :
+				$AnimatedSprite2D.flip_h = true
+			else:
+				$AnimatedSprite2D.flip_h = false
+		
+		if abs(rand_dir.x) < abs(rand_dir.y):
+			if rand_dir.y < 0 :
+				$AnimatedSprite2D.play("walk_back")
+			else:
+				$AnimatedSprite2D.play("walk_front")
+
+func chase_animation():
+	if is_chasing and enemy_alive:
+		if abs(vector_chase.x) > abs(vector_chase.y):
+			if $AnimatedSprite2D.animation != "run_side":
+				$AnimatedSprite2D.play("run_side")
+			if vector_chase.x < 0 :
+				$AnimatedSprite2D.flip_h = true
+			else:
+				$AnimatedSprite2D.flip_h = false
+		
+		if abs(vector_chase.x) < abs(vector_chase.y):
+			if vector_chase.y < 0 :
+				if $AnimatedSprite2D.animation != "run_back":
+					$AnimatedSprite2D.play("run_back")
+			else:
+				if $AnimatedSprite2D.animation != "run_front":
+					$AnimatedSprite2D.play("run_front")
 #--------------------------------------------------------------------------
 
 
@@ -125,7 +162,7 @@ func _on_player_attack_range_body_entered(body: Node2D) -> void:
 
 func _on_player_attack_range_body_exited(body: Node2D) -> void:
 	if body.has_method("player"):
-		player_attack_range = true
+		player_attack_range = false
 
 #--------------------------------------------------------------------------
 
@@ -133,4 +170,13 @@ func _on_player_attack_range_body_exited(body: Node2D) -> void:
 func _on_attacked_cooldown_timeout() -> void:
 	$attacked_cooldown.stop()
 	can_take_damege = true
+
+func _on_timer_direction_timeout() -> void:
+	idle_walking = false
+
+func _on_timer_walk_timeout() -> void:
+	idle_stop = true
+
+func _on_timer_death_timeout() -> void:
+	self.queue_free()
 #--------------------------------------------------------------------------

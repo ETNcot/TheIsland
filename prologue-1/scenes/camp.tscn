@@ -3,11 +3,12 @@
 [ext_resource type="Script" uid="uid://be71j8a73kgl" path="res://scripts/camp.gd" id="1_c5nam"]
 [ext_resource type="TileSet" uid="uid://rwv5b1bm60a0" path="res://tilesets/world.tres" id="1_wk8fr"]
 [ext_resource type="PackedScene" uid="uid://drfhh8gh8nu7e" path="res://scenes/player.tscn" id="3_nsjlq"]
+[ext_resource type="PackedScene" uid="uid://dcj34lf4nrjjm" path="res://scenes/campfire.tscn" id="4_nsjlq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c5nam"]
 size = Vector2(186, 21)
 
-[node name="Node2D" type="Node2D" unique_id=1799522827]
+[node name="camp" type="Node2D" unique_id=1799522827]
 y_sort_enabled = true
 script = ExtResource("1_c5nam")
 
@@ -26,7 +27,7 @@ tile_set = ExtResource("1_wk8fr")
 
 [node name="ysort" type="TileMapLayer" parent="." unique_id=1265238840]
 y_sort_enabled = true
-tile_map_data = PackedByteArray("AAAJAAEAAwAAAAAAAAAJAAQAAwAAAAEAAAAQAAQAAwAAAAEAAAAIAAoAAwAAAAEAAAARAAoAAwAAAAEAAAAJAAYAAwAKAAcAAAAJAAkAAwAKAAcAAAAQAAcAAwAKAAcAAAAMAAcAAwAGAAcAAAAFAAYAAwAAAAUAAAAUAAYAAwAAAAUAAAAGAA0AAwAAAAUAAAAUAAwAAwAAAAUAAAAOAAQAAwALAAIAAAAYAAQAAwAIAAYAAAAaAAkAAwAIAAYAAAACAAYAAwAIAAYAAAACAAsAAwAIAAYAAAADAAEAAwAIAAYAAAAGAAkAAwAIAAYAAAAYAA4AAwAGAAcAAAAVAAIAAwAGAAcAAAALAA0AAwAGAAcAAAADAA4AAwAGAAcAAAAGAAEAAwAGAAcAAAAFAAMAAwAAAAEAAAACAAMAAwAAAAEAAAAAAAgAAwAAAAEAAAAPAA0AAwAAAAEAAAAZAAwAAwAAAAEAAAAZAAQAAwAAAAEAAAAXAAAAAwAAAAEAAAAQAAEAAwAFAAAAAAAQAAIAAwAFAAAAAAAKAAsAAwAFAAAAAAALAAsAAwAFAAAAAAAYAAgAAwAKAAcAAAAZAAYAAwAKAAcAAAAJAA0AAwAKAAcAAAABAAwAAwAKAAcAAAABAAQAAwAKAAcAAAAQAA0AAwAKAAcAAAA=")
+tile_map_data = PackedByteArray("AAAJAAEAAwAAAAAAAAAJAAQAAwAAAAEAAAAQAAQAAwAAAAEAAAAIAAoAAwAAAAEAAAARAAoAAwAAAAEAAAAJAAYAAwAKAAcAAAAJAAkAAwAKAAcAAAAQAAcAAwAKAAcAAAAMAAcAAwAGAAcAAAAFAAYAAwAAAAUAAAAUAAYAAwAAAAUAAAAGAA0AAwAAAAUAAAAUAAwAAwAAAAUAAAAYAAQAAwAIAAYAAAAaAAkAAwAIAAYAAAACAAYAAwAIAAYAAAACAAsAAwAIAAYAAAADAAEAAwAIAAYAAAAGAAkAAwAIAAYAAAAYAA4AAwAGAAcAAAAVAAIAAwAGAAcAAAALAA0AAwAGAAcAAAADAA4AAwAGAAcAAAAGAAEAAwAGAAcAAAAFAAMAAwAAAAEAAAACAAMAAwAAAAEAAAAAAAgAAwAAAAEAAAAPAA0AAwAAAAEAAAAZAAwAAwAAAAEAAAAZAAQAAwAAAAEAAAAXAAAAAwAAAAEAAAAQAAEAAwAFAAAAAAAQAAIAAwAFAAAAAAAKAAsAAwAFAAAAAAALAAsAAwAFAAAAAAAYAAgAAwAKAAcAAAAZAAYAAwAKAAcAAAAJAA0AAwAKAAcAAAABAAwAAwAKAAcAAAABAAQAAwAKAAcAAAAQAA0AAwAKAAcAAAA=")
 tile_set = ExtResource("1_wk8fr")
 
 [node name="player" parent="." unique_id=1560605064 instance=ExtResource("3_nsjlq")]
@@ -40,5 +41,8 @@ position = Vector2(448, 240)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="world_exit" unique_id=682870194]
 position = Vector2(200, -11)
 shape = SubResource("RectangleShape2D_c5nam")
+
+[node name="CharacterBody2D" parent="." unique_id=1429433086 instance=ExtResource("4_nsjlq")]
+position = Vector2(237, 153)
 
 [connection signal="body_entered" from="world_exit" to="." method="_on_world_exit_body_entered"]

@@ -1,0 +1,61 @@
+[gd_scene format=3 uid="uid://dcj34lf4nrjjm"]
+
+[ext_resource type="Script" uid="uid://deojol5cj60jf" path="res://scripts/campfire.gd" id="1_m47ar"]
+[ext_resource type="Texture2D" uid="uid://dom8wmiuhquyh" path="res://art/object/Feuer_animation3.png" id="2_54scn"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yfrnb"]
+radius = 8.062258
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8pk5p"]
+atlas = ExtResource("2_54scn")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m6xh0"]
+atlas = ExtResource("2_54scn")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1v5ef"]
+atlas = ExtResource("2_54scn")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_63vhv"]
+atlas = ExtResource("2_54scn")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_w2pjx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8pk5p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m6xh0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1v5ef")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_63vhv")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_te7ig"]
+radius = 25.019993
+
+[node name="campfire" type="CharacterBody2D" unique_id=1429433086]
+script = ExtResource("1_m47ar")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1676595806]
+shape = SubResource("CircleShape2D_yfrnb")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=63519057]
+sprite_frames = SubResource("SpriteFrames_w2pjx")
+frame_progress = 0.40832782
+
+[node name="Area2D" type="Area2D" parent="." unique_id=26308197]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1799315155]
+shape = SubResource("CircleShape2D_te7ig")

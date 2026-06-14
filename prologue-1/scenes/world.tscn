@@ -4,11 +4,12 @@
 [ext_resource type="PackedScene" uid="uid://drfhh8gh8nu7e" path="res://scenes/player.tscn" id="2_rwgxs"]
 [ext_resource type="Script" uid="uid://cp670vl5lbtkd" path="res://scripts/world.gd" id="3_4wyf3"]
 [ext_resource type="PackedScene" uid="uid://cdvnkr8i2wywm" path="res://scenes/enemy.tscn" id="4_k0juu"]
+[ext_resource type="PackedScene" uid="uid://ueo0cmq02ii3" path="res://scenes/mashroom.tscn" id="5_71j4m"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rwgxs"]
 size = Vector2(256, 21)
 
-[node name="Node2D" type="Node2D" unique_id=1478952714]
+[node name="world" type="Node2D" unique_id=1478952714]
 y_sort_enabled = true
 script = ExtResource("3_4wyf3")
 
@@ -32,7 +33,7 @@ tile_map_data = PackedByteArray("AAADAA0AAwAAAAUAAAACAAUAAwAAAAUAAAAPAAcAAwAAAAU
 tile_set = ExtResource("1_nnsk1")
 
 [node name="player" parent="." unique_id=1560605064 instance=ExtResource("2_rwgxs")]
-position = Vector2(165, 226)
+position = Vector2(157, 211)
 
 [node name="enemy" parent="." unique_id=245183190 instance=ExtResource("4_k0juu")]
 position = Vector2(209, 79)
@@ -45,5 +46,8 @@ position = Vector2(448, 240)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=624876931]
 position = Vector2(209, 251)
 shape = SubResource("RectangleShape2D_rwgxs")
+
+[node name="CharacterBody2D" parent="." unique_id=605551003 instance=ExtResource("5_71j4m")]
+position = Vector2(264, 170)
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

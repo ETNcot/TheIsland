@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://ueo0cmq02ii3"]
+
+[ext_resource type="Script" uid="uid://b5g47dye5wyke" path="res://scripts/mashroom.gd" id="1_2w860"]
+[ext_resource type="Texture2D" uid="uid://b3s2het1ciaub" path="res://art/object/Plz_Animation.png" id="1_rdqlw"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2w860"]
+radius = 13.0
+height = 28.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kfum1"]
+atlas = ExtResource("1_rdqlw")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pxicu"]
+atlas = ExtResource("1_rdqlw")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2k7ss"]
+atlas = ExtResource("1_rdqlw")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gvop4"]
+atlas = ExtResource("1_rdqlw")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uixb6"]
+atlas = ExtResource("1_rdqlw")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_abjdb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kfum1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pxicu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2k7ss")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gvop4")
+}, {
+"duration": 8.0,
+"texture": SubResource("AtlasTexture_uixb6")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_y7p2p"]
+radius = 24.186773
+
+[node name="mashroom" type="CharacterBody2D" unique_id=605551003]
+script = ExtResource("1_2w860")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1419545116]
+shape = SubResource("CapsuleShape2D_2w860")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=293631021]
+position = Vector2(1, -6)
+sprite_frames = SubResource("SpriteFrames_abjdb")
+frame_progress = 0.53210825
+
+[node name="Area2D" type="Area2D" parent="." unique_id=653167183]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1168046750]
+shape = SubResource("CircleShape2D_y7p2p")
+
+[node name="Timer" type="Timer" parent="." unique_id=25048998]
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

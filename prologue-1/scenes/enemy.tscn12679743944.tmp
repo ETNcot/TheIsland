@@ -245,12 +245,12 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_g0wcc")
 }, {
-"duration": 8.0,
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_s1ycm")
 }],
-"loop": false,
+"loop": true,
 "name": &"death",
-"speed": 4.0
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -457,7 +457,7 @@ radius = 50.039986
 [sub_resource type="CircleShape2D" id="CircleShape2D_5uy6h"]
 radius = 37.054016
 
-[node name="enemy" type="CharacterBody2D" unique_id=245183190]
+[node name="CharacterBody2D" type="CharacterBody2D" unique_id=245183190]
 script = ExtResource("1_7p1mj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=915771378]
@@ -491,9 +491,6 @@ show_percentage = false
 
 [node name="timer_walk" type="Timer" parent="." unique_id=1055821698]
 
-[node name="timer_death" type="Timer" parent="." unique_id=1996872525]
-wait_time = 3.0
-
 [connection signal="body_entered" from="detection_area" to="." method="_on_detection_area_body_entered"]
 [connection signal="body_exited" from="detection_area" to="." method="_on_detection_area_body_exited"]
 [connection signal="body_entered" from="player_attack_range" to="." method="_on_player_attack_range_body_entered"]
@@ -501,4 +498,3 @@ wait_time = 3.0
 [connection signal="timeout" from="attacked_cooldown" to="." method="_on_attacked_cooldown_timeout"]
 [connection signal="timeout" from="timer_direction" to="." method="_on_timer_direction_timeout"]
 [connection signal="timeout" from="timer_walk" to="." method="_on_timer_walk_timeout"]
-[connection signal="timeout" from="timer_death" to="." method="_on_timer_death_timeout"]
